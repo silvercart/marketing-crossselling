@@ -252,9 +252,7 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
         $output   = '';
         
         if ($elements) {
-            foreach ($elements as $element) {
-                $output .= $this->customise($element)->renderWith($this->customTemplateName);
-            }
+            $output .= $this->customise($elements)->renderWith($this->customTemplateName);
         }
         
         return $output;
