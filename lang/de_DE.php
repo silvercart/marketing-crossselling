@@ -37,13 +37,16 @@ if (array_key_exists('de_DE', $lang) && is_array($lang['de_DE'])) {
 
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['CHOOSE_FILL_METHOD']           = 'Wählen Sie die Art, wie Produkte für das Widget ausgesucht werden sollen';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['CMSTITLE']                     = 'Widget für die Anzeige von Cross-Selling Produkten';
+$lang['de_DE']['SilvercartMarketingCrossSellingWidget']['CUSTOM_TEMPLATE_NAME']         = 'Name des eigenen Templates (ohne .ss Endung)';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['DESCRIPTION']                  = 'Stellt die ausgewählten Produkte als Widget dar.';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['FILL_METHOD']                  = 'Selektionsmethode für die Produkte';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['IS_CONTENT_VIEW']              = 'Normale Produktansicht statt Widgetansicht verwenden';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['NUMBER_OF_PRODUCTS']           = 'Anzahl der Produkte, die angezeigt werden sollen';
+$lang['de_DE']['SilvercartMarketingCrossSellingWidget']['OTHERPRODUCTGROUP']            = 'Produkte aus der nachfolgend definierten Warengruppe verwenden';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['TITLE']                        = 'Widget für die Anzeige von Cross-Selling Produkten';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['ORDERSTATISTICS']              = 'Bestellstatistiken nutzen, um Produkte anzuzeigen, die zusammen mit dem aktuellen Produkt gekauft wurden';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['RANDOMGENERATOR']              = 'Zufallsgenerator nutzen (Produkte werden aus gleicher Warengruppe zufällig ausgewählt)';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['SHOW_ON_PRODUCT_GROUP_PAGES']  = 'Auch auf Warengruppenseiten anzeigen';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['USE_LISTVIEW']                 = 'Listendarstellung verwenden';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['WIDGET_TITLE']                 = 'Titel für das Widget';
+$lang['de_DE']['SilvercartMarketingCrossSellingWidget']['USE_CUSTOM_TEMPLATES']         = 'Eigenes Template für die Anzeige verwenden';

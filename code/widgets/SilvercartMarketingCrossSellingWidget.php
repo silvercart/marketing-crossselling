@@ -43,11 +43,25 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
      */
     public static $db = array(
         'isContentView'             => 'Boolean(0)',
-        'fillMethod'                => "Enum('randomGenerator,orderStatistics','randomGenerator')",
+        'fillMethod'                => "Enum('randomGenerator,orderStatistics,otherProductGroup','randomGenerator')",
         'numberOfProducts'          => 'Int',
         'useListView'               => 'Boolean(0)',
         'WidgetTitle'               => 'VarChar(255)',
-        'showOnProductGroupPages'   => 'Boolean(0)'
+        'showOnProductGroupPages'   => 'Boolean(0)',
+        'useCustomTemplate'         => 'Boolean(0)',
+        'customTemplateName'        => 'VarChar(255)'
+    );
+    
+    /**
+     * 1:1 or 1:n relationships.
+     *
+     * @var array
+     * 
+     * @author Sascha Koehler <skoehler@pixeltricks.de>
+     * @since 30.08.2011
+     */
+    public static $has_one = array(
+        'SilvercartProductGroupPage' => 'SilvercartProductGroupPage'
     );
     
     /**
@@ -136,6 +150,12 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
             new CheckboxField('showOnProductGroupPages', _t('SilvercartMarketingCrossSellingWidget.SHOW_ON_PRODUCT_GROUP_PAGES'))
         );
         $fields->push(
+            new CheckboxField('useCustomTemplate', _t('SilvercartMarketingCrossSellingWidget.USE_CUSTOM_TEMPLATES'))
+        );
+        $fields->push(
+            new TextField('customTemplateName', _t('SilvercartMarketingCrossSellingWidget.CUSTOM_TEMPLATE_NAME'))
+        );
+        $fields->push(
             new CheckboxField('isContentView', _t('SilvercartMarketingCrossSellingWidget.IS_CONTENT_VIEW'))
         );
         $fields->push(
@@ -144,12 +164,16 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         $fields->push(
             new TextField('numberOfProducts', _t('SilvercartMarketingCrossSellingWidget.NUMBER_OF_PRODUCTS'))
         );
+        
         $fields->push(
             new OptionsetField(
                 'fillMethod',
                 _t('SilvercartMarketingCrossSellingWidget.CHOOSE_FILL_METHOD'),
                 $fillMethods
             )
+        );
+        $fields->push(
+            new GroupedDropdownField('SilvercartProductGroupPageID', _t('SilvercartProductGroupPage.SINGULARNAME', 'product group'), SilvercartProductGroupHolder_Controller::getRecursiveProductGroupsForGroupedDropdownAsArray())
         );
         
         return $fields;
@@ -176,6 +200,9 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         if (!array_key_exists('showOnProductGroupPages', $data)) {
             $this->showOnProductGroupPages = 0;
         }
+        if (!array_key_exists('useCustomTemplate', $data)) {
+            $this->useCustomTemplate = 0;
+        }
         
         parent::populateFromPostData($data);
 	}
@@ -192,6 +219,46 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
  * @copyright 2011 pixeltricks GmbH
  */
 class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_Controller {
+    
+    /**
+     * Incdicates wether a custom template should be used for rendering.
+     *
+     * @return boolean
+     *
+     * @author Sascha Koehler <skoehler@pixeltricks.de>
+     * @since 30.08.2011
+     */
+    public function isCustomView() {
+        $isCustomView = false;
+        
+        if ($this->useCustomTemplate) {
+            $isCustomView = true;
+        }
+        
+        return $isCustomView;
+    }
+    
+    /**
+     * Returns an HTML string with the contents rendered with the custom
+     * template.
+     *
+     * @return string
+     *
+     * @author Sascha Koehler <skoehler@pixeltricks.de>
+     * @since 30.08.2011
+     */
+    public function CustomView() {
+        $elements = $this->Elements();
+        $output   = '';
+        
+        if ($elements) {
+            foreach ($elements as $element) {
+                $output .= $this->customise($element)->renderWith($this->customTemplateName);
+            }
+        }
+        
+        return $output;
+    }
     
     /**
      * Returns a DataObjectSet of products.
@@ -220,6 +287,9 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
                 break;
             case 'orderStatistics':
                 return $this->selectElementyByOrderStatistics($controller);
+                break;
+            case 'otherProductGroup':
+                return $this->selectElementFromOtherProductGroup($controller);
                 break;
         }
     }
@@ -255,5 +325,26 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      */
     protected function selectElementyByOrderStatistics($controller) {
         
+    }
+    
+    /**
+     * Returns a set of products from another product group.
+     *
+     * @return mixed DataObjectSet|false
+     *
+     * @param Controller $controller The current controller 
+     * 
+     * @author Sascha Koehler <skoehler@pixeltricks.de>
+     * @since 30.08.2011
+     */
+    protected function selectElementFromOtherProductGroup($controller) {
+        $resultSet = false;
+        
+        if ($this->SilvercartProductGroupPageID > 0) {
+            $productGroupPage = ModelAsController::controller_for($this->SilvercartProductGroupPage());
+            $resultSet        = $productGroupPage->getRandomProducts($this->numberOfProducts);
+        }
+
+        return $resultSet;
     }
 }

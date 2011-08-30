@@ -1,6 +1,8 @@
 <% if Elements %>
     <h2>$WidgetTitle</h2>
-    <% if isContentView %>
+    <% if isCustomView %>
+        $CustomView
+    <% else_if isContentView %>
         <% if useListView %>
             <% include SilvercartProductGroupPageList %>
         <% else %>
