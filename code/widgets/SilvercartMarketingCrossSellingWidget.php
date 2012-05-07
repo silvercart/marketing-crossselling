@@ -65,6 +65,33 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
     );
     
     /**
+     * 1:n relationships.
+     *
+     * @var array
+     */
+    public static $has_many = array(
+        'SilvercartMarketingCrossSellingWidgetLanguages' => 'SilvercartMarketingCrossSellingWidgetLanguage'
+    );
+    
+    /**
+     * Casted properties
+     *
+     * @var array
+     */
+    public static $casting = array(
+        'WidgetTitle' => 'VarChar(255)'
+    );
+    
+    /**
+     * Getter for the widgets title depending on the current locale
+     *
+     * @return string 
+     */
+    public function getWidgetTitle() {
+        return $this->getLanguageFieldValue('WidgetTitle');
+    }
+    
+    /**
      * Returns the title of this widget.
      * 
      * @return string
@@ -108,16 +135,23 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
      *
      * @return array
      *
-     * @author Sascha Koehler <skoehler@pixeltricks.de>
-     * @copyright 2011 pixeltricks GmbH
-     * @since 29.08.2011
+     * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 07.05.2012
      */
     public function fieldLabels($includerelations = true) {
         $fieldLabels = array_merge(
             parent::fieldLabels($includerelations),
             array(
-                'fillMethod'    => _t('SilvercartMarketingCrossSellingWidget.FILL_METHOD'),
-                'WidgetTitle'   => _t('SilvercartMarketingCrossSellingWidget.WIDGET_TITLE')
+                'fillMethod'                                        => _t('SilvercartMarketingCrossSellingWidget.FILL_METHOD'),
+                'WidgetTitle'                                       => _t('SilvercartMarketingCrossSellingWidget.WIDGET_TITLE'),
+                'showOnProductGroupPages'                           => _t('SilvercartMarketingCrossSellingWidget.SHOW_ON_PRODUCT_GROUP_PAGES'),
+                'useCustomTemplate'                                 => _t('SilvercartMarketingCrossSellingWidget.USE_CUSTOM_TEMPLATES'),
+                'customTemplateName'                                => _t('SilvercartMarketingCrossSellingWidget.CUSTOM_TEMPLATE_NAME'),
+                'isContentView'                                     => _t('SilvercartMarketingCrossSellingWidget.IS_CONTENT_VIEW'),
+                'useListView'                                       => _t('SilvercartMarketingCrossSellingWidget.USE_LISTVIEW'),
+                'numberOfProducts'                                  => _t('SilvercartMarketingCrossSellingWidget.NUMBER_OF_PRODUCTS'),
+                'SilvercartProductGroupPage'                        => _t('SilvercartProductGroupPage.SINGULARNAME'),
+                'SilvercartMarketingCrossSellingWidgetLanguages'    => _t('SilvercartMarketingCrossSellingWidgetLanguage.PLURALNAME'),
             )
         );
 
@@ -130,11 +164,16 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
      *
      * @return FieldSet
      *
-     * @author Sascha Koehler <skoehler@pixeltricks.de>
-     * @since 29.08.2011
+     * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 07.05.2012
      */
     public function getCMSFields() {
-        $fields = parent::getCMSFields();
+        $fields = new FieldSet();
+        
+        
+        $rootTabSet         = new TabSet('RootTabSet');
+        $mainTab            = new Tab('Root',               _t('Silvercart.CONTENT'));
+        $translationsTab    = new Tab('TranslationsTab',    _t('SilvercartConfig.TRANSLATIONS'));
         
         $fillMethods = singleton('SilvercartMarketingCrossSellingWidget')->dbObject('fillMethod')->enumValues();
         
@@ -142,39 +181,45 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
             $fillMethods[$fillMethodKey] = _t('SilvercartMarketingCrossSellingWidget.'.strtoupper($fillMethodName));
         }
         
-        $fields->push(
-            new TextField('WidgetTitle', _t('SilvercartMarketingCrossSellingWidget.WIDGET_TITLE'))
-        );
-        
-        $fields->push(
-            new CheckboxField('showOnProductGroupPages', _t('SilvercartMarketingCrossSellingWidget.SHOW_ON_PRODUCT_GROUP_PAGES'))
-        );
-        $fields->push(
-            new CheckboxField('useCustomTemplate', _t('SilvercartMarketingCrossSellingWidget.USE_CUSTOM_TEMPLATES'))
-        );
-        $fields->push(
-            new TextField('customTemplateName', _t('SilvercartMarketingCrossSellingWidget.CUSTOM_TEMPLATE_NAME'))
-        );
-        $fields->push(
-            new CheckboxField('isContentView', _t('SilvercartMarketingCrossSellingWidget.IS_CONTENT_VIEW'))
-        );
-        $fields->push(
-            new CheckboxField('useListView', _t('SilvercartMarketingCrossSellingWidget.USE_LISTVIEW'))
-        );
-        $fields->push(
-            new TextField('numberOfProducts', _t('SilvercartMarketingCrossSellingWidget.NUMBER_OF_PRODUCTS'))
-        );
-        
-        $fields->push(
-            new OptionsetField(
+        $showOnProductGroupPagesField   = new CheckboxField('showOnProductGroupPages',  $this->fieldLabel('showOnProductGroupPages'));
+        $useCustomTemplateField         = new CheckboxField('useCustomTemplate',        $this->fieldLabel('useCustomTemplate'));
+        $customTemplateNameField        = new TextField('customTemplateName',           $this->fieldLabel('customTemplateName'));
+        $isContentViewField             = new CheckboxField('isContentView',            $this->fieldLabel('isContentView'));
+        $useListViewField               = new CheckboxField('useListView',              $this->fieldLabel('useListView'));
+        $numberOfProductsField          = new TextField('numberOfProducts',             $this->fieldLabel('numberOfProducts'));
+        $fillMethodField                = new OptionsetField(
                 'fillMethod',
-                _t('SilvercartMarketingCrossSellingWidget.CHOOSE_FILL_METHOD'),
+                $this->fieldLabel('fillMethod'),
                 $fillMethods
-            )
         );
-        $fields->push(
-            new GroupedDropdownField('SilvercartProductGroupPageID', _t('SilvercartProductGroupPage.SINGULARNAME', 'product group'), SilvercartProductGroupHolder_Controller::getRecursiveProductGroupsForGroupedDropdownAsArray())
+        $silvercartProductGroupPage     = new GroupedDropdownField(
+                'SilvercartProductGroupPageID',
+                $this->fieldLabel('SilvercartProductGroupPage'),
+                SilvercartProductGroupHolder_Controller::getRecursiveProductGroupsForGroupedDropdownAsArray()
         );
+        $translationsTableField         = new ComplexTableField($this, 'SilvercartMarketingCrossSellingWidgetLanguages', 'SilvercartMarketingCrossSellingWidgetLanguage');
+        
+        $languageFields = SilvercartLanguageHelper::prepareCMSFields($this->getLanguage());
+        foreach ($languageFields as $languageField) {
+            $mainTab->push($languageField);
+        }
+        
+        $fields->push($rootTabSet);
+        $rootTabSet->push($mainTab);
+        $rootTabSet->push($translationsTab);
+        
+        $mainTab->push($showOnProductGroupPagesField);
+        $mainTab->push($useCustomTemplateField);
+        $mainTab->push($customTemplateNameField);
+        $mainTab->push($isContentViewField);
+        $mainTab->push($useListViewField);
+        $mainTab->push($numberOfProductsField);
+        $mainTab->push($fillMethodField);
+        $mainTab->push($silvercartProductGroupPage);
+        
+        $translationsTab->push($translationsTableField);
+        
+        $this->extend('updateCMSFields', $fields);
         
         return $fields;
     }
@@ -183,14 +228,14 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
      * We set checkbox field values here to false if they are not in the post
      * data array.
      *
-     * @return void
-     *
      * @param array $data The post data array
+     *
+     * @return void
      * 
-     * @author Sascha Koehler <skoehler@pixeltricks.de>
-     * @since 28.08.2011
+     * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 07.05.2012
      */
-    function populateFromPostData($data) {
+    public function populateFromPostData($data) {
         if (!array_key_exists('isContentView', $data)) {
             $this->isContentView = 0;
         }
@@ -205,7 +250,7 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         }
         
         parent::populateFromPostData($data);
-	}
+    }
 }
 
 /**
@@ -263,8 +308,8 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      *
      * @return DataObjectSet
      *
-     * @author Sascha Koehler <skoehler@pixeltricks.de>
-     * @since 29.08.2011
+     * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 07.05.2012
      */
     public function Elements() {
         $controller = Controller::curr();
@@ -284,10 +329,10 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
                 return $this->selectElementyByRandomGenerator($controller);
                 break;
             case 'orderStatistics':
-                return $this->selectElementyByOrderStatistics($controller);
+                return $this->selectElementyByOrderStatistics();
                 break;
             case 'otherProductGroup':
-                return $this->selectElementFromOtherProductGroup($controller);
+                return $this->selectElementFromOtherProductGroup();
                 break;
         }
     }
@@ -313,15 +358,13 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
     /**
      * Returns a random set of products that have been bought together with
      * the displayed product.
-     *
-     * @param Controller $controller The current controller
      * 
      * @return mixed DataObjectSet|boolean false
      *
      * @author Sascha Koehler <skoehler@pixeltricks.de>
      * @since 29.08.2011
      */
-    protected function selectElementyByOrderStatistics($controller) {
+    protected function selectElementyByOrderStatistics() {
         
     }
     
@@ -329,13 +372,11 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      * Returns a set of products from another product group.
      *
      * @return mixed DataObjectSet|false
-     *
-     * @param Controller $controller The current controller 
      * 
-     * @author Sascha Koehler <skoehler@pixeltricks.de>
-     * @since 30.08.2011
+     * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 07.05.2012
      */
-    protected function selectElementFromOtherProductGroup($controller) {
+    protected function selectElementFromOtherProductGroup() {
         $resultSet = false;
         
         if ($this->SilvercartProductGroupPageID > 0) {

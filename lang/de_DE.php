@@ -50,3 +50,6 @@ $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['SHOW_ON_PRODUCT_GROUP_P
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['USE_LISTVIEW']                 = 'Listendarstellung verwenden';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['WIDGET_TITLE']                 = 'Titel für das Widget';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['USE_CUSTOM_TEMPLATES']         = 'Eigenes Template für die Anzeige verwenden';
+
+$lang['de_DE']['SilvercartMarketingCrossSellingWidgetLanguage']['PLURALNAME']           = _t('Silvercart.TRANSLATIONS');
+$lang['de_DE']['SilvercartMarketingCrossSellingWidgetLanguage']['SINGULARNAME']         = _t('Silvercart.TRANSLATION');
