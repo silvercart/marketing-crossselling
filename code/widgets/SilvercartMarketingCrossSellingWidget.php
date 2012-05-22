@@ -192,11 +192,14 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
                 $this->fieldLabel('fillMethod'),
                 $fillMethods
         );
-        $silvercartProductGroupPage     = new GroupedDropdownField(
+        
+        $productGroupHolder = SilvercartTools::PageByIdentifierCode('SilvercartProductGroupHolder');
+        $silvercartProductGroupDropdown = new TreeDropdownField(
                 'SilvercartProductGroupPageID',
-                $this->fieldLabel('SilvercartProductGroupPage'),
-                SilvercartProductGroupHolder_Controller::getRecursiveProductGroupsForGroupedDropdownAsArray()
+                $this->fieldLabel('SilvercartProductGroup'),
+                'SiteTree'
         );
+        $silvercartProductGroupDropdown->setTreeBaseID($productGroupHolder->ID);
         $translationsTableField         = new ComplexTableField($this, 'SilvercartMarketingCrossSellingWidgetLanguages', 'SilvercartMarketingCrossSellingWidgetLanguage');
         
         $languageFields = SilvercartLanguageHelper::prepareCMSFields($this->getLanguage());
@@ -215,7 +218,7 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         $mainTab->push($useListViewField);
         $mainTab->push($numberOfProductsField);
         $mainTab->push($fillMethodField);
-        $mainTab->push($silvercartProductGroupPage);
+        $mainTab->push($silvercartProductGroupDropdown);
         
         $translationsTab->push($translationsTableField);
         
