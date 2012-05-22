@@ -46,7 +46,6 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         'fillMethod'                => "Enum('randomGenerator,orderStatistics,otherProductGroup','randomGenerator')",
         'numberOfProducts'          => 'Int',
         'useListView'               => 'Boolean(0)',
-        'WidgetTitle'               => 'VarChar(255)',
         'showOnProductGroupPages'   => 'Boolean(0)',
         'useCustomTemplate'         => 'Boolean(0)',
         'customTemplateName'        => 'VarChar(255)'
@@ -192,10 +191,10 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
                 $this->fieldLabel('fillMethod'),
                 $fillMethods
         );
-        $silvercartProductGroupPage     = new GroupedDropdownField(
+        $silvercartProductGroupPage     = new SilvercartGroupedDropdownField(
                 'SilvercartProductGroupPageID',
                 $this->fieldLabel('SilvercartProductGroupPage'),
-                SilvercartProductGroupHolder_Controller::getRecursiveProductGroupsForGroupedDropdownAsArray()
+                SilvercartProductGroupHolder_Controller::getRecursiveProductGroupsForGroupedDropdownAsArray(null, true)
         );
         $translationsTableField         = new ComplexTableField($this, 'SilvercartMarketingCrossSellingWidgetLanguages', 'SilvercartMarketingCrossSellingWidgetLanguage');
         
