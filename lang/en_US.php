@@ -46,6 +46,7 @@ $lang['en_US']['SilvercartMarketingCrossSellingWidget']['OTHERPRODUCTGROUP']    
 $lang['en_US']['SilvercartMarketingCrossSellingWidget']['TITLE']                        = 'Widget for displaying cross-selling products';
 $lang['en_US']['SilvercartMarketingCrossSellingWidget']['ORDERSTATISTICS']              = 'Use order statistics to show products that have been bought together with the viewed product';
 $lang['en_US']['SilvercartMarketingCrossSellingWidget']['RANDOMGENERATOR']              = 'Use random generator (products are randomly selected from the same product group)';
+$lang['en_US']['SilvercartMarketingCrossSellingWidget']['RELATEDPRODUCTS']              = 'Related products (products are related by productnumber by the following autocompletion textfield)';
 $lang['en_US']['SilvercartMarketingCrossSellingWidget']['SHOW_ON_PRODUCT_GROUP_PAGES']  = 'Show also on product group pages';
 $lang['en_US']['SilvercartMarketingCrossSellingWidget']['USE_LISTVIEW']                 = 'Use listview';
 $lang['en_US']['SilvercartMarketingCrossSellingWidget']['WIDGET_TITLE']                 = 'Widget title';

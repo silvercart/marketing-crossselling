@@ -200,7 +200,7 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         );
         $silvercartProductGroupDropdown = new TreeDropdownField(
                 'SilvercartProductGroupPageID',
-                $this->fieldLabel('SilvercartProductGroup'),
+                $this->fieldLabel('SilvercartProductGroupPage'),
                 'SiteTree'
         );
         $silvercartProductGroupDropdown->setTreeBaseID($productGroupHolder->ID);
