@@ -334,6 +334,9 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
                 return $this->selectElementyByOrderStatistics();
                 break;
             case 'otherProductGroup':
+                if ($controller->ID === $this->SilvercartProductGroupPage()->ID) {
+                    return false;
+                }
                 return $this->selectElementFromOtherProductGroup();
                 break;
         }
