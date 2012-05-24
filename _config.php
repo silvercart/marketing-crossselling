@@ -21,6 +21,7 @@
  * @ignore 
  */
 
+Object::add_extension('SilvercartProduct',                                      'SilvercartMarketingCrossSellingProduct');
 // DataObject Translations
 Object::add_extension('SilvercartMarketingCrossSellingWidgetLanguage',          'SilvercartLanguageDecorator');
 // Translatable DataObjects
