@@ -45,7 +45,7 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         'isContentView'             => 'Boolean(0)',
         'fillMethod'                => "Enum('randomGenerator,orderStatistics,otherProductGroup,relatedProducts','randomGenerator')",
         'numberOfProducts'          => 'Int',
-        'useListView'               => 'Boolean(0)',
+        'GroupView'                 => 'VarChar(255)',
         'showOnProductGroupPages'   => 'Boolean(0)',
         'useCustomTemplate'         => 'Boolean(0)',
         'customTemplateName'        => 'VarChar(255)'
@@ -149,14 +149,13 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
     public function fieldLabels($includerelations = true) {
         $fieldLabels = array_merge(
             parent::fieldLabels($includerelations),
+            SilvercartWidgetTools::fieldLabelsForProductSliderWidget($this),
             array(
                 'fillMethod'                                        => _t('SilvercartMarketingCrossSellingWidget.FILL_METHOD'),
                 'WidgetTitle'                                       => _t('SilvercartMarketingCrossSellingWidget.WIDGET_TITLE'),
                 'showOnProductGroupPages'                           => _t('SilvercartMarketingCrossSellingWidget.SHOW_ON_PRODUCT_GROUP_PAGES'),
                 'useCustomTemplate'                                 => _t('SilvercartMarketingCrossSellingWidget.USE_CUSTOM_TEMPLATES'),
                 'customTemplateName'                                => _t('SilvercartMarketingCrossSellingWidget.CUSTOM_TEMPLATE_NAME'),
-                'isContentView'                                     => _t('SilvercartMarketingCrossSellingWidget.IS_CONTENT_VIEW'),
-                'useListView'                                       => _t('SilvercartMarketingCrossSellingWidget.USE_LISTVIEW'),
                 'numberOfProducts'                                  => _t('SilvercartMarketingCrossSellingWidget.NUMBER_OF_PRODUCTS'),
                 'SilvercartProductGroupPage'                        => _t('SilvercartProductGroupPage.SINGULARNAME'),
                 'SilvercartMarketingCrossSellingWidgetLanguages'    => _t('SilvercartMarketingCrossSellingWidgetLanguage.PLURALNAME'),
@@ -191,8 +190,8 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         $useCustomTemplateField         = new CheckboxField('useCustomTemplate',        $this->fieldLabel('useCustomTemplate'));
         $customTemplateNameField        = new TextField('customTemplateName',           $this->fieldLabel('customTemplateName'));
         $isContentViewField             = new CheckboxField('isContentView',            $this->fieldLabel('isContentView'));
-        $useListViewField               = new CheckboxField('useListView',              $this->fieldLabel('useListView'));
         $numberOfProductsField          = new TextField('numberOfProducts',             $this->fieldLabel('numberOfProducts'));
+        $groupViewField                 = SilvercartGroupViewHandler::getGroupViewDropdownField('GroupView', $widget->fieldLabel('GroupView'), $widget->GroupView);
         $fillMethodField                = new OptionsetField(
                 'fillMethod',
                 $this->fieldLabel('fillMethod'),
@@ -225,7 +224,7 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         $mainTab->push($useCustomTemplateField);
         $mainTab->push($customTemplateNameField);
         $mainTab->push($isContentViewField);
-        $mainTab->push($useListViewField);
+        $mainTab->push($groupViewField);
         $mainTab->push($numberOfProductsField);
         $mainTab->push($fillMethodField);
         $mainTab->push($silvercartProductGroupDropdown);
@@ -253,8 +252,8 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         if (!array_key_exists('isContentView', $data)) {
             $this->isContentView = 0;
         }
-        if (!array_key_exists('useListView', $data)) {
-            $this->useListView = 0;
+        if (!array_key_exists('GroupView', $data)) {
+            $this->GroupView = SilvercartGroupViewHandler::getDefaultGroupView();
         }
         if (!array_key_exists('showOnProductGroupPages', $data)) {
             $this->showOnProductGroupPages = 0;
@@ -352,6 +351,20 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
                 return $this->selectElementFromRelatedProducts();
                 break;
         }
+    }
+    
+    /**
+     * Returns the content for non slider widgets
+     *
+     * @return string
+     * 
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 30.05.2012
+     */
+    public function ElementsContent() {
+        return $this->customise(array(
+            'Elements' => $this->Elements(),
+        ))->renderWith(SilvercartWidgetTools::getGroupViewTemplateName($this));
     }
     
     /**
