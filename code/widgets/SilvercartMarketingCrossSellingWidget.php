@@ -191,7 +191,7 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         $customTemplateNameField        = new TextField('customTemplateName',           $this->fieldLabel('customTemplateName'));
         $isContentViewField             = new CheckboxField('isContentView',            $this->fieldLabel('isContentView'));
         $numberOfProductsField          = new TextField('numberOfProducts',             $this->fieldLabel('numberOfProducts'));
-        $groupViewField                 = SilvercartGroupViewHandler::getGroupViewDropdownField('GroupView', $widget->fieldLabel('GroupView'), $widget->GroupView);
+        $groupViewField                 = SilvercartGroupViewHandler::getGroupViewDropdownField('GroupView', $this->fieldLabel('GroupView'), $this->GroupView);
         $fillMethodField                = new OptionsetField(
                 'fillMethod',
                 $this->fieldLabel('fillMethod'),
