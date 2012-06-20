@@ -173,7 +173,7 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
      * @return FieldSet
      *
      * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 07.05.2012
+     * @since 20.06.2012
      */
     public function getCMSFields() {
         $productGroupHolder = SilvercartTools::PageByIdentifierCode('SilvercartProductGroupHolder');
@@ -205,7 +205,7 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
         $silvercartProductGroupDropdown->setTreeBaseID($productGroupHolder->ID);
         $translationsTableField         = new ComplexTableField($this, 'SilvercartMarketingCrossSellingWidgetLanguages', 'SilvercartMarketingCrossSellingWidgetLanguage');
         
-        $languageFields = SilvercartLanguageHelper::prepareCMSFields($this->getLanguage());
+        $languageFields = SilvercartLanguageHelper::prepareCMSFields($this->getLanguage(true));
         foreach ($languageFields as $languageField) {
             $mainTab->push($languageField);
         }
