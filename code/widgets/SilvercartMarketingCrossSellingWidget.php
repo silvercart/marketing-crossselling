@@ -327,13 +327,9 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
     public function Elements() {
         $controller = Controller::curr();
         
-        if (!$controller instanceof SilvercartProductGroupPage_Controller) {
-            return false;
-        }
-        
-        if (!$controller->isProductDetailView() &&
-            !$this->showOnProductGroupPages) {
-            
+        if (!$this->showOnProductGroupPages &&
+            (!$controller->hasMethod('isProductDetailView') ||
+             !$controller->isProductDetailView())) {
             return false;
         }
         
