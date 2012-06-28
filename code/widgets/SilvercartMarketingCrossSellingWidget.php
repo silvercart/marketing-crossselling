@@ -279,6 +279,13 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
 class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_Controller {
     
     /**
+     * Set of active related products
+     *
+     * @var DataObjectSet
+     */
+    protected $relatedProducts = null;
+    
+    /**
      * Incdicates wether a custom template should be used for rendering.
      *
      * @return boolean
@@ -322,34 +329,37 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      * @return DataObjectSet
      *
      * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 07.05.2012
+     * @since 28.06.2012
      */
     public function Elements() {
         $controller = Controller::curr();
+        $elements   = new DataObjectSet();
         
         if (!$this->showOnProductGroupPages &&
             (!$controller->hasMethod('isProductDetailView') ||
              !$controller->isProductDetailView())) {
-            return false;
+            $elements = false;
+        } else {
+            switch ($this->fillMethod) {
+                case 'randomGenerator':
+                    $elements = $this->selectElementyByRandomGenerator($controller);
+                    break;
+                case 'orderStatistics':
+                    $elements = $this->selectElementyByOrderStatistics();
+                    break;
+                case 'otherProductGroup':
+                    if ($controller->ID === $this->SilvercartProductGroupPage()->ID) {
+                        $elements = false;
+                    } else {
+                        $elements = $this->selectElementFromOtherProductGroup();
+                    }
+                    break;
+                case 'relatedProducts':
+                    $elements = $this->selectElementFromRelatedProducts();
+                    break;
+            }
         }
-        
-        switch ($this->fillMethod) {
-            case 'randomGenerator':
-                return $this->selectElementyByRandomGenerator($controller);
-                break;
-            case 'orderStatistics':
-                return $this->selectElementyByOrderStatistics();
-                break;
-            case 'otherProductGroup':
-                if ($controller->ID === $this->SilvercartProductGroupPage()->ID) {
-                    return false;
-                }
-                return $this->selectElementFromOtherProductGroup();
-                break;
-            case 'relatedProducts':
-                return $this->selectElementFromRelatedProducts();
-                break;
-        }
+        return $elements;
     }
     
     /**
@@ -415,16 +425,24 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
 
         return $resultSet;
     }
-    
+
     /**
      * Returns the related products
      *
      * @return ComponentSet
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 22.05.2012
+     * @since 28.06.2012
      */
     protected function selectElementFromRelatedProducts() {
-        return $this->SilvercartProducts();
+        if (is_null($this->relatedProducts)) {
+            $this->relatedProducts = new DataObjectSet();
+            foreach ($this->SilvercartProducts() as $product) {
+                if ($product->isActive) {
+                    $this->relatedProducts->push($product);
+                }
+            }
+        }
+        return $this->relatedProducts;
     }
 }
