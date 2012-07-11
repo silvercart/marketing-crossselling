@@ -43,7 +43,7 @@ $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['FILL_METHOD']          
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['IS_CONTENT_VIEW']              = 'Normale Produktansicht statt Widgetansicht verwenden';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['NUMBER_OF_PRODUCTS']           = 'Anzahl der Produkte, die angezeigt werden sollen';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['OTHERPRODUCTGROUP']            = 'Produkte aus der nachfolgend definierten Warengruppe verwenden';
-$lang['de_DE']['SilvercartMarketingCrossSellingWidget']['TITLE']                        = 'Widget für die Anzeige von Cross-Selling Produkten';
+$lang['de_DE']['SilvercartMarketingCrossSellingWidget']['TITLE']                        = 'Cross-Selling Produkte';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['ORDERSTATISTICS']              = 'Bestellstatistiken nutzen, um Produkte anzuzeigen, die zusammen mit dem aktuellen Produkt gekauft wurden';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['RANDOMGENERATOR']              = 'Zufallsgenerator nutzen (Produkte werden aus gleicher Warengruppe zufällig ausgewählt)';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['RELATEDPRODUCTS']              = 'Produkte direkt verknüpfen (Produkte werden über das nachfolgende Textfeld mit Autovervollständigung für Artikelnummern gepflegt)';

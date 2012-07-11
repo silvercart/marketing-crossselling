@@ -377,6 +377,23 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
     }
     
     /**
+     * overloads the parents Content() method;
+     * fill only if there are elements
+     *
+     * @return mixed $content 
+     * 
+     * @author Roland Lehmann <rlehmann@pixeltricks.de>
+     * @since 09.07.2012
+     */
+    public function Content() {
+        $content = false;
+        if ($this->ElementsContent()) {
+            $content = parent::Content();
+        }
+        return $content;
+    }
+
+        /**
      * Returns a random set of products from the same product group we're
      * currently in.
      *

@@ -43,7 +43,7 @@ $lang['nl_NL']['SilvercartMarketingCrossSellingWidget']['FILL_METHOD']          
 $lang['nl_NL']['SilvercartMarketingCrossSellingWidget']['IS_CONTENT_VIEW']              = 'Gebruik gewone Productoverzicht in plaats van widgetview';
 $lang['nl_NL']['SilvercartMarketingCrossSellingWidget']['NUMBER_OF_PRODUCTS']           = 'Aantal producten laten zien';
 $lang['nl_NL']['SilvercartMarketingCrossSellingWidget']['OTHERPRODUCTGROUP']            = 'Gebruik producten uit de volgende productgroep';
-$lang['nl_NL']['SilvercartMarketingCrossSellingWidget']['TITLE']                        = 'Widget voor het weergeven van cross-selling producten';
+$lang['nl_NL']['SilvercartMarketingCrossSellingWidget']['TITLE']                        = 'cross-selling producte';
 $lang['nl_NL']['SilvercartMarketingCrossSellingWidget']['ORDERSTATISTICS']              = 'Gebruik om statistieken op producten die zijn gekocht te tonen samen met het bekeken product';
 $lang['nl_NL']['SilvercartMarketingCrossSellingWidget']['RANDOMGENERATOR']              = 'Gebruik toevalsgenerator (producten worden willekeurig gekozen uit dezelfde productgroep)';
 $lang['nl_NL']['SilvercartMarketingCrossSellingWidget']['SHOW_ON_PRODUCT_GROUP_PAGES']  = 'Toon ook op productgroep pagina\'s';
