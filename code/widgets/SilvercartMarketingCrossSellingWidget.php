@@ -284,7 +284,30 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      * @var DataObjectSet
      */
     protected $relatedProducts = null;
-    
+
+    /**
+     * Product elements
+     *
+     * @var DataObjectSet
+     */
+    protected $elements = null;
+
+    /**
+     * Register forms for the contained products.
+     *
+     * @return void
+     *
+     * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 28.03.2012
+     */
+    public function init() {
+        $elementIdx = 0;
+
+        foreach ($this->Elements() as $element) {
+            SilvercartWidgetTools::registerAddCartFormForProductWidget($this, $element, $elementIdx, 'SilvercartProductAddCartFormDetail');
+        }
+    }
+
     /**
      * Incdicates wether a custom template should be used for rendering.
      *
@@ -332,34 +355,43 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      * @since 28.06.2012
      */
     public function Elements() {
-        $controller = Controller::curr();
-        $elements   = new DataObjectSet();
-        
-        if (!$this->showOnProductGroupPages &&
-            (!$controller->hasMethod('isProductDetailView') ||
-             !$controller->isProductDetailView())) {
-            $elements = false;
-        } else {
-            switch ($this->fillMethod) {
-                case 'randomGenerator':
-                    $elements = $this->selectElementyByRandomGenerator($controller);
-                    break;
-                case 'orderStatistics':
-                    $elements = $this->selectElementyByOrderStatistics();
-                    break;
-                case 'otherProductGroup':
-                    if ($controller->ID === $this->SilvercartProductGroupPage()->ID) {
-                        $elements = false;
-                    } else {
-                        $elements = $this->selectElementFromOtherProductGroup();
-                    }
-                    break;
-                case 'relatedProducts':
-                    $elements = $this->selectElementFromRelatedProducts();
-                    break;
+        if ($this->elements === null) {
+            $controller = Controller::curr();
+            $elements   = new DataObjectSet();
+
+            if (!$this->showOnProductGroupPages &&
+                (!$controller->hasMethod('isProductDetailView') ||
+                 !$controller->isProductDetailView())) {
+                $elements = false;
+            } else {
+                switch ($this->fillMethod) {
+                    case 'randomGenerator':
+                        $elements = $this->selectElementyByRandomGenerator($controller);
+                        break;
+                    case 'orderStatistics':
+                        $elements = $this->selectElementyByOrderStatistics();
+                        break;
+                    case 'otherProductGroup':
+                        if ($controller->ID === $this->SilvercartProductGroupPage()->ID) {
+                            $elements = false;
+                        } else {
+                            $elements = $this->selectElementFromOtherProductGroup();
+                        }
+                        break;
+                    case 'relatedProducts':
+                        $elements = $this->selectElementFromRelatedProducts();
+                        break;
+                }
             }
+
+            foreach ($elements as $element) {
+                $element->addCartFormIdentifier = $this->ID.'_'.$element->ID;
+            }
+
+            $this->elements = $elements;
         }
-        return $elements;
+
+        return $this->elements;
     }
     
     /**
