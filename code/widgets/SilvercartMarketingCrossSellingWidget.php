@@ -300,11 +300,11 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
      * @since 28.03.2012
      */
-    public function init() {
+    public function registerCustomHtmlForms() {
         $elementIdx = 0;
 
         foreach ($this->Elements() as $element) {
-            SilvercartWidgetTools::registerAddCartFormForProductWidget($this, $element, $elementIdx, 'SilvercartProductAddCartFormDetail');
+            SilvercartWidgetTools::registerAddCartFormForProductWidget($this, $element, $elementIdx, $this->GroupView);
         }
     }
 
@@ -386,6 +386,7 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
 
             foreach ($elements as $element) {
                 $element->addCartFormIdentifier = $this->ID.'_'.$element->ID;
+                $element->addCartFormName       = $this->GroupView;
             }
 
             $this->elements = $elements;
