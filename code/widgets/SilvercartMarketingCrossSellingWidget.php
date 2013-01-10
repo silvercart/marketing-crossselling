@@ -352,7 +352,7 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      * @return DataObjectSet
      *
      * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 28.06.2012
+     * @since 10.01.2013
      */
     public function Elements() {
         if ($this->elements === null) {
@@ -384,9 +384,11 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
                 }
             }
 
-            foreach ($elements as $element) {
-                $element->addCartFormIdentifier = $this->ID.'_'.$element->ID;
-                $element->addCartFormName       = $this->GroupView;
+            if ($elements !== false) {
+                foreach ($elements as $element) {
+                    $element->addCartFormIdentifier = $this->ID.'_'.$element->ID;
+                    $element->addCartFormName       = $this->GroupView;
+                }
             }
 
             $this->elements = $elements;
