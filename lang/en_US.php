@@ -26,14 +26,7 @@
  * @ignore
  */
 
-
 global $lang;
-
-
-
-
-
-
 
 $lang['en_US']['SilvercartMarketingCrossSellingWidget']['CHOOSE_FILL_METHOD']           = 'Choose how products should be selected for the widget';
 $lang['en_US']['SilvercartMarketingCrossSellingWidget']['CMSTITLE']                     = 'Widget for displaying cross-selling products';

@@ -1,0 +1,20 @@
+nl:
+  SilvercartMarketingCrossSellingWidget:
+    CHOOSE_FILL_METHOD: "Geef aan hoe producten moeten worden geselecteerd voor de widget"
+    CMSTITLE: "Widget voor het weergeven van cross-selling producten"
+    CUSTOM_TEMPLATE_NAME: "Naam van de aangepaste sjabloon (zonder .ss extensie)"
+    DESCRIPTION: "Toont de gekozen producten in een widget."
+    FILL_METHOD: "Selectiemethode voor producten"
+    IS_CONTENT_VIEW: "Gebruik gewone Productoverzicht in plaats van widgetview"
+    NUMBER_OF_PRODUCTS: "Aantal producten laten zien"
+    ORDERSTATISTICS: "Gebruik om statistieken op producten die zijn gekocht te tonen samen met het bekeken product"
+    OTHERPRODUCTGROUP: "Gebruik producten uit de volgende productgroep"
+    RANDOMGENERATOR: "Gebruik toevalsgenerator (producten worden willekeurig gekozen uit dezelfde productgroep)"
+    SHOW_ON_PRODUCT_GROUP_PAGES: "Toon ook op productgroep pagina's"
+    TITLE: "cross-selling producte"
+    USE_CUSTOM_TEMPLATES: "Gebruik aangepaste sjabloon voor het weergeven van"
+    USE_LISTVIEW: "Gebruik lijstweergave"
+    WIDGET_TITLE: "Widget titel"
+  SilvercartMarketingCrossSellingWidgetLanguage:
+    PLURALNAME: "Übersetzungen"
+    SINGULARNAME: "Übersetzung"

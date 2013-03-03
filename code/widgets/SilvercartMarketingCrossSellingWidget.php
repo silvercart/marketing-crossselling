@@ -168,71 +168,50 @@ class SilvercartMarketingCrossSellingWidget extends SilvercartWidget {
     }
     
     /**
+     * Returns an array of field/relation names (db, has_one, has_many, 
+     * many_many, belongs_many_many) to exclude from form scaffolding in
+     * backend.
+     * This is a performance friendly way to exclude fields.
+     * 
+     * @return array
+     * 
+     * @author Roland Lehmann <rlehmann@pixeltricks.de>
+     * @since 03.04.2013
+     */
+    public function excludeFromScaffolding() {
+        $excludeFromScaffolding = array(
+            'fillMethod',
+            'Parent',
+            'GroupView'
+        );
+        $this->extend('updateExcludeFromScaffolding', $excludeFromScaffolding);
+        return $excludeFromScaffolding;
+    }
+    
+    /**
      * Define CMS Fields for this widget.
      *
-     * @return FieldSet
+     * @return FieldList
      *
      * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 20.06.2012
+     * @since 03.03.2013
      */
     public function getCMSFields() {
-        $productGroupHolder = SilvercartTools::PageByIdentifierCode('SilvercartProductGroupHolder');
+        $fields = SilvercartDataObject::getCMSFields($this, 'ExtraCssClasses', false);
+        
         $fillMethods        = singleton('SilvercartMarketingCrossSellingWidget')->dbObject('fillMethod')->enumValues();
         foreach ($fillMethods as $fillMethodKey => $fillMethodName) {
             $fillMethods[$fillMethodKey] = _t('SilvercartMarketingCrossSellingWidget.'.strtoupper($fillMethodName));
         }
-        $fields             = new FieldSet();
-        $rootTabSet         = new TabSet('RootTabSet');
-        $mainTab            = new Tab('Root',               _t('Silvercart.CONTENT'));
-        $translationsTab    = new Tab('TranslationsTab',    _t('SilvercartConfig.TRANSLATIONS'));
+        $fillMethodDropdown = new DropdownField(
+                                'fillMethod',
+                                $this->fieldLabel('fillMethod'),
+                                $fillMethods
+                              );
+        $fields->insertBefore($fillMethodDropdown, 'numberOfProducts');
         
-        $showOnProductGroupPagesField   = new CheckboxField('showOnProductGroupPages',  $this->fieldLabel('showOnProductGroupPages'));
-        $useCustomTemplateField         = new CheckboxField('useCustomTemplate',        $this->fieldLabel('useCustomTemplate'));
-        $customTemplateNameField        = new TextField('customTemplateName',           $this->fieldLabel('customTemplateName'));
-        $isContentViewField             = new CheckboxField('isContentView',            $this->fieldLabel('isContentView'));
-        $numberOfProductsField          = new TextField('numberOfProducts',             $this->fieldLabel('numberOfProducts'));
-        $groupViewField                 = SilvercartGroupViewHandler::getGroupViewDropdownField('GroupView', $this->fieldLabel('GroupView'), $this->GroupView);
-        $fillMethodField                = new OptionsetField(
-                'fillMethod',
-                $this->fieldLabel('fillMethod'),
-                $fillMethods
-        );
-        $silvercartProductGroupDropdown = new TreeDropdownField(
-                'SilvercartProductGroupPageID',
-                $this->fieldLabel('SilvercartProductGroupPage'),
-                'SiteTree'
-        );
-        $silvercartProductGroupDropdown->setTreeBaseID($productGroupHolder->ID);
-        $translationsTableField         = new ComplexTableField($this, 'SilvercartMarketingCrossSellingWidgetLanguages', 'SilvercartMarketingCrossSellingWidgetLanguage');
-        
-        $languageFields = SilvercartLanguageHelper::prepareCMSFields($this->getLanguage(true));
-        foreach ($languageFields as $languageField) {
-            $mainTab->push($languageField);
-        }
-        $silvercartProducts             = new SilvercartManyManyTextAutoCompleteField(
-                $this,
-                'SilvercartProducts',
-                $this->fieldLabel('SilvercartProducts'),
-                'SilvercartProduct.ProductNumberShop'
-        );
-        
-        $fields->push($rootTabSet);
-        $rootTabSet->push($mainTab);
-        $rootTabSet->push($translationsTab);
-        
-        $mainTab->push($showOnProductGroupPagesField);
-        $mainTab->push($useCustomTemplateField);
-        $mainTab->push($customTemplateNameField);
-        $mainTab->push($isContentViewField);
-        $mainTab->push($groupViewField);
-        $mainTab->push($numberOfProductsField);
-        $mainTab->push($fillMethodField);
-        $mainTab->push($silvercartProductGroupDropdown);
-        $mainTab->push($silvercartProducts);
-        
-        $translationsTab->push($translationsTableField);
-        
-        $this->extend('updateCMSFields', $fields);
+        $groupViewField = SilvercartGroupViewHandler::getGroupViewDropdownField('GroupView', $this->fieldLabel('GroupView'), $this->GroupView);
+        $fields->insertAfter($groupViewField, 'numberOfProducts');
         
         return $fields;
     }
@@ -357,7 +336,7 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
     public function Elements() {
         if ($this->elements === null) {
             $controller = Controller::curr();
-            $elements   = new DataObjectSet();
+            $elements   = new ArrayList();
 
             if (!$this->showOnProductGroupPages &&
                 (!$controller->hasMethod('isProductDetailView') ||
@@ -434,7 +413,7 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      *
      * @param Controller $controller The current controller
      * 
-     * @return mixed DataObjectSet|boolean false
+     * @return mixed DataList|boolean false
      *
      * @author Sascha Koehler <skoehler@pixeltricks.de>
      * @since 29.08.2011
@@ -488,7 +467,7 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      */
     protected function selectElementFromRelatedProducts() {
         if (is_null($this->relatedProducts)) {
-            $this->relatedProducts = new DataObjectSet();
+            $this->relatedProducts = new ArrayList();
             foreach ($this->SilvercartProducts() as $product) {
                 if ($product->isActive) {
                     $this->relatedProducts->push($product);

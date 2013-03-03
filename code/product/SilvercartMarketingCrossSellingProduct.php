@@ -31,23 +31,16 @@
  * @since 13.03.2012
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  */
-class SilvercartMarketingCrossSellingProduct extends DataObjectDecorator {
+class SilvercartMarketingCrossSellingProduct extends DataExtension {
     
     /**
-     * Adds som extra data model fields
+     * n:m relationships.
      *
-     * @return array
-     * 
-     * @author Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 14.03.2012
+     * @var array
      */
-    public function extraStatics() {
-        return array(
-            'belongs_many_many'  => array(
-                'SilvercartMarketingCrossSellingWidgets' => 'SilvercartMarketingCrossSellingWidget',
-            ),
-        );
-    }
+    public static $belongs_many_many = array(
+        'SilvercartMarketingCrossSellingWidgets' => 'SilvercartMarketingCrossSellingWidget'
+    );
     
     /**
      * Updates the CMS fields
@@ -59,7 +52,7 @@ class SilvercartMarketingCrossSellingProduct extends DataObjectDecorator {
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 16.03.2012
      */
-    public function updateCMSFields(FieldSet &$fields) {
+    public function updateCMSFields(FieldList $fields) {
         $fields->removeByName('SilvercartMarketingCrossSellingWidgets');
     }
     

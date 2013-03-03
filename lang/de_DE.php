@@ -25,15 +25,8 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License
  * @ignore
  */
-i18n::include_locale_file('silvercart_marketing_cross_selling', 'en_US');
 
 global $lang;
-
-if (array_key_exists('de_DE', $lang) && is_array($lang['de_DE'])) {
-    $lang['de_DE'] = array_merge($lang['en_US'], $lang['de_DE']);
-} else {
-    $lang['de_DE'] = $lang['en_US'];
-}
 
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['CHOOSE_FILL_METHOD']           = 'Wählen Sie die Art, wie Produkte für das Widget ausgesucht werden sollen';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['CMSTITLE']                     = 'Widget für die Anzeige von Cross-Selling Produkten';

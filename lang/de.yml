@@ -1,0 +1,21 @@
+de:
+  SilvercartMarketingCrossSellingWidget:
+    CHOOSE_FILL_METHOD: "Wählen Sie die Art, wie Produkte für das Widget ausgesucht werden sollen"
+    CMSTITLE: "Widget für die Anzeige von Cross-Selling Produkten"
+    CUSTOM_TEMPLATE_NAME: "Name des eigenen Templates (ohne .ss Endung)"
+    DESCRIPTION: "Stellt die ausgewählten Produkte als Widget dar."
+    FILL_METHOD: "Selektionsmethode für die Produkte"
+    IS_CONTENT_VIEW: "Normale Produktansicht statt Widgetansicht verwenden"
+    NUMBER_OF_PRODUCTS: "Anzahl der Produkte, die angezeigt werden sollen"
+    ORDERSTATISTICS: "Bestellstatistiken nutzen, um Produkte anzuzeigen, die zusammen mit dem aktuellen Produkt gekauft wurden"
+    OTHERPRODUCTGROUP: "Produkte aus der nachfolgend definierten Warengruppe verwenden"
+    RANDOMGENERATOR: "Zufallsgenerator nutzen (Produkte werden aus gleicher Warengruppe zufällig ausgewählt)"
+    RELATEDPRODUCTS: "Produkte direkt verknüpfen (Produkte werden über das nachfolgende Textfeld mit Autovervollständigung für Artikelnummern gepflegt)"
+    SHOW_ON_PRODUCT_GROUP_PAGES: "Auch auf Warengruppenseiten anzeigen"
+    TITLE: "Cross-Selling Produkte"
+    USE_CUSTOM_TEMPLATES: "Eigenes Template für die Anzeige verwenden"
+    USE_LISTVIEW: "Listendarstellung verwenden"
+    WIDGET_TITLE: "Titel für das Widget"
+  SilvercartMarketingCrossSellingWidgetLanguage:
+    PLURALNAME: "Übersetzungen"
+    SINGULARNAME: "Übersetzung"
