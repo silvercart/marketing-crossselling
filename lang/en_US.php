@@ -35,6 +35,11 @@ global $lang;
 
 
 
+$lang['en_US']['SilvercartMarketingCrossSellingProduct']['ALTERNATIVESOURCEPRODUCTS']       = 'Use the following products as alternative products';
+$lang['en_US']['SilvercartMarketingCrossSellingProduct']['ALTERNATIVETARGETPRODUCTS']       = 'This Product is an alternative product for the following ones';
+$lang['en_US']['SilvercartMarketingCrossSellingProduct']['CROSSSELLINGGROUP']               = 'Cross-Selling';
+$lang['en_US']['SilvercartMarketingCrossSellingProduct']['SHOWALTERNATIVEPRODUCTSBEFORE']   = 'Show alternative products <u>above</u> the product details (otherwise below details)';
+
 $lang['en_US']['SilvercartMarketingCrossSellingWidget']['CHOOSE_FILL_METHOD']           = 'Choose how products should be selected for the widget';
 $lang['en_US']['SilvercartMarketingCrossSellingWidget']['CMSTITLE']                     = 'Widget for displaying cross-selling products';
 $lang['en_US']['SilvercartMarketingCrossSellingWidget']['CUSTOM_TEMPLATE_NAME']         = 'Name of the custom template (without .ss extension)';

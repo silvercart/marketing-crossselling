@@ -35,6 +35,11 @@ if (array_key_exists('de_DE', $lang) && is_array($lang['de_DE'])) {
     $lang['de_DE'] = $lang['en_US'];
 }
 
+$lang['de_DE']['SilvercartMarketingCrossSellingProduct']['ALTERNATIVESOURCEPRODUCTS']       = 'Folgende Produkte als Alternativ-Produkte verwenden';
+$lang['de_DE']['SilvercartMarketingCrossSellingProduct']['ALTERNATIVETARGETPRODUCTS']       = 'Dieses Produkt als Alternativ-Produkt für folgende verwenden';
+$lang['de_DE']['SilvercartMarketingCrossSellingProduct']['CROSSSELLINGGROUP']               = 'Cross-Selling';
+$lang['de_DE']['SilvercartMarketingCrossSellingProduct']['SHOWALTERNATIVEPRODUCTSBEFORE']   = 'Alternativ-Produkte <u>über</u> den Produkt-Details anzeigen (ansonsten erfolgt die Anzeige unter den Details)';
+
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['CHOOSE_FILL_METHOD']           = 'Wählen Sie die Art, wie Produkte für das Widget ausgesucht werden sollen';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['CMSTITLE']                     = 'Widget für die Anzeige von Cross-Selling Produkten';
 $lang['de_DE']['SilvercartMarketingCrossSellingWidget']['CUSTOM_TEMPLATE_NAME']         = 'Name des eigenen Templates (ohne .ss Endung)';
