@@ -1,7 +1,7 @@
 <% cached WidgetCacheKey %>
     <% if Elements %>
         <% if WidgetTitle %>
-            <h2>$WidgetTitle</h2>
+            <strong class="h2">{$WidgetTitle}</strong>
         <% end_if %>
         <% if isCustomView %>
             $CustomView
