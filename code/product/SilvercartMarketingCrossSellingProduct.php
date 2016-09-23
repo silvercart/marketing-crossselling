@@ -45,7 +45,7 @@ class SilvercartMarketingCrossSellingProduct extends DataExtension {
     /**
      * Updates the CMS fields
      *
-     * @param FieldSet &$fields Fields to update
+     * @param FieldList $fields Fields to update
      * 
      * @return void
      *

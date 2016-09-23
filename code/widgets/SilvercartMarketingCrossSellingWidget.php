@@ -260,14 +260,14 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
     /**
      * Set of active related products
      *
-     * @var DataObjectSet
+     * @var ArrayList
      */
     protected $relatedProducts = null;
 
     /**
      * Product elements
      *
-     * @var DataObjectSet
+     * @var ArrayList
      */
     protected $elements = null;
 
@@ -326,9 +326,9 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
     }
     
     /**
-     * Returns a DataObjectSet of products.
+     * Returns a ArrayList of products.
      *
-     * @return DataObjectSet
+     * @return ArrayList
      *
      * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
      * @since 10.01.2013
@@ -429,7 +429,7 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      * Returns a random set of products that have been bought together with
      * the displayed product.
      * 
-     * @return mixed DataObjectSet|boolean false
+     * @return SS_List
      *
      * @author Sascha Koehler <skoehler@pixeltricks.de>
      * @since 29.08.2011
@@ -441,7 +441,7 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
     /**
      * Returns a set of products from another product group.
      *
-     * @return mixed DataObjectSet|false
+     * @return SS_List
      * 
      * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
      * @since 07.05.2012
@@ -460,7 +460,7 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
     /**
      * Returns the related products
      *
-     * @return ComponentSet
+     * @return ArrayList
      * 
      * @author Sebastian Diel <sdiel@pixeltricks.de>
      * @since 28.06.2012
