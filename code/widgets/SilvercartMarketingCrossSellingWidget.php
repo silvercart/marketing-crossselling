@@ -330,8 +330,9 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      *
      * @return ArrayList
      *
-     * @author Sascha Koehler <skoehler@pixeltricks.de>, Sebastian Diel <sdiel@pixeltricks.de>
-     * @since 10.01.2013
+     * @author Sebastian Diel <sdiel@pixeltricks.de>,
+     *         Sascha Koehler <skoehler@pixeltricks.de>
+     * @since 07.11.2016
      */
     public function Elements() {
         if ($this->elements === null) {
@@ -370,7 +371,7 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
                 }
             }
 
-            $this->elements = $elements;
+            $this->elements = $elements->limit($this->numberOfProducts);
         }
 
         return $this->elements;
@@ -415,14 +416,12 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      * 
      * @return mixed DataList|boolean false
      *
-     * @author Sascha Koehler <skoehler@pixeltricks.de>
-     * @since 29.08.2011
+     * @author Sebastian Diel <sdiel@pixeltricks.de>,
+     *         Sascha Koehler <skoehler@pixeltricks.de>
+     * @since 07.11.2016
      */
     protected function selectElementyByRandomGenerator($controller) {
-        $resultSet = false;
-        $resultSet = $controller->getRandomProducts($this->numberOfProducts);
-
-        return $resultSet;
+        return $controller->getRandomProducts($this->numberOfProducts);
     }
     
     /**
