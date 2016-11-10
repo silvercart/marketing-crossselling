@@ -10,7 +10,7 @@ en:
     ORDERSTATISTICS: "Use order statistics to show products that have been bought together with the viewed product"
     OTHERPRODUCTGROUP: "Use products from the following product group"
     RANDOMGENERATOR: "Use random generator (products are randomly selected from the same product group)"
-    RELATEDPRODUCTS: "Related products (products are related by productnumber by the following autocompletion textfield)"
+    RELATEDPRODUCTS: "Related products (products are related by using the \"Products\" tab)"
     SHOW_ON_PRODUCT_GROUP_PAGES: "Show also on product group pages"
     TITLE: "Cross-selling products"
     USE_CUSTOM_TEMPLATES: "Use custom template for rendering"

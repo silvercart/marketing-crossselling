@@ -10,7 +10,7 @@ de:
     ORDERSTATISTICS: "Bestellstatistiken nutzen, um Produkte anzuzeigen, die zusammen mit dem aktuellen Produkt gekauft wurden"
     OTHERPRODUCTGROUP: "Produkte aus der nachfolgend definierten Warengruppe verwenden"
     RANDOMGENERATOR: "Zufallsgenerator nutzen (Produkte werden aus gleicher Warengruppe zufällig ausgewählt)"
-    RELATEDPRODUCTS: "Produkte direkt verknüpfen (Produkte werden über das nachfolgende Textfeld mit Autovervollständigung für Artikelnummern gepflegt)"
+    RELATEDPRODUCTS: "Produkte direkt verknüpfen (Produkte werden über den Karteireiter \"Artikel\" gepflegt)"
     SHOW_ON_PRODUCT_GROUP_PAGES: "Auch auf Warengruppenseiten anzeigen"
     TITLE: "Cross-Selling Produkte"
     USE_CUSTOM_TEMPLATES: "Eigenes Template für die Anzeige verwenden"
