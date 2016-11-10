@@ -336,8 +336,9 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
      */
     public function Elements() {
         if ($this->elements === null) {
-            $controller = Controller::curr();
-            $elements   = new ArrayList();
+            $controller     = Controller::curr();
+            $elements       = new ArrayList();
+            $this->elements = new ArrayList();
 
             if (!$this->showOnProductGroupPages &&
                 (!$controller->hasMethod('isProductDetailView') ||
@@ -352,7 +353,8 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
                         $elements = $this->selectElementyByOrderStatistics();
                         break;
                     case 'otherProductGroup':
-                        if ($controller->ID === $this->SilvercartProductGroupPage()->ID) {
+                        if ($controller->ID === $this->SilvercartProductGroupPage()->ID &&
+                            !$controller->isProductDetailView()) {
                             $elements = false;
                         } else {
                             $elements = $this->selectElementFromOtherProductGroup();
@@ -369,9 +371,8 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
                     $element->addCartFormIdentifier = $this->ID.'_'.$element->ID;
                     $element->addCartFormName       = $this->GroupView;
                 }
+                $this->elements = $elements->limit($this->numberOfProducts);
             }
-
-            $this->elements = $elements->limit($this->numberOfProducts);
         }
 
         return $this->elements;
