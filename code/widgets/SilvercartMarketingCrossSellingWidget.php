@@ -425,16 +425,33 @@ class SilvercartMarketingCrossSellingWidget_Controller extends SilvercartWidget_
     }
     
     /**
-     * Returns a random set of products that have been bought together with
-     * the displayed product.
+     * Returns a set of products that have been bought together with
+     * the displayed product, sorted by total amount.
      * 
      * @return SS_List
      *
-     * @author Sascha Koehler <skoehler@pixeltricks.de>
-     * @since 29.08.2011
+     * @author Sebastian Diel <sdiel@pixeltricks.de>
+     * @since 10.11.2016
      */
     protected function selectElementyByOrderStatistics() {
-        
+        $controller = Controller::curr();
+        $elements   = new ArrayList();
+
+        if ($controller->hasMethod('isProductDetailView') &&
+            $controller->isProductDetailView()) {
+            $product = $controller->getDetailViewProduct();
+            if ($product instanceof SilvercartProduct &&
+                $product->exists()) {
+                if (empty($this->numberOfProducts)) {
+                    $this->numberOfProducts = 5;
+                }
+                
+                $orderIDQuery   = 'SELECT "SOP"."SilvercartOrderID" FROM "SilvercartOrderPosition" AS "SOP" WHERE "SOP"."SilvercartProductID" = ' . $product->ID;
+                $productIDQuery = 'SELECT DISTINCT "SOP2"."SilvercartProductID" FROM "SilvercartOrderPosition" AS "SOP2" WHERE "SOP2"."SilvercartOrderID" IN (' . $orderIDQuery . ') AND "SOP2"."SilvercartProductID" != ' . $product->ID . ' GROUP BY "SOP2"."SilvercartProductID" ORDER BY COUNT("SOP2"."ID") DESC';
+                $elements = SilvercartProduct::getProducts('"SilvercartProduct"."ID" IN (' . $productIDQuery . ')', null, null, $this->numberOfProducts);
+            }
+        }
+        return $elements;
     }
     
     /**
