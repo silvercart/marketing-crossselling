@@ -20,6 +20,9 @@
  * @subpackage Config
  * @ignore 
  */
+if (!class_exists('SS_Object')) {
+    class_alias('Object', 'SS_Object');
+}
 
 SS_Object::add_extension('SilvercartProduct',                                      'SilvercartMarketingCrossSellingProduct');
 // DataObject Translations
