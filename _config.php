@@ -21,8 +21,8 @@
  * @ignore 
  */
 
-Object::add_extension('SilvercartProduct',                                      'SilvercartMarketingCrossSellingProduct');
+SS_Object::add_extension('SilvercartProduct',                                      'SilvercartMarketingCrossSellingProduct');
 // DataObject Translations
-Object::add_extension('SilvercartMarketingCrossSellingWidgetLanguage',          'SilvercartLanguageDecorator');
+SS_Object::add_extension('SilvercartMarketingCrossSellingWidgetLanguage',          'SilvercartLanguageDecorator');
 // Translatable DataObjects
-Object::add_extension('SilvercartMarketingCrossSellingWidget',                  'SilvercartDataObjectMultilingualDecorator');
+SS_Object::add_extension('SilvercartMarketingCrossSellingWidget',                  'SilvercartDataObjectMultilingualDecorator');
